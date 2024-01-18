@@ -35,6 +35,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.googlebooks.Navigation.AllScreens
 import com.example.googlebooks.Navigation.Navigations
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.delay
 
 @Composable
@@ -51,7 +53,14 @@ fun SplashScreen(navController: NavController){
         )
 
         delay(2000L)
+//        if(FirebaseAuth.getInstance().currentUser?.email.isNullOrEmpty()){
+//        navController.navigate(AllScreens.LoginScreen.name)}
+//
+//        else
+//        { navController.navigate(AllScreens.HomeScreen.name)}
+
         navController.navigate(AllScreens.LoginScreen.name)
+
     })
 //    Surface(modifier = Modifier.fillMaxSize()) {
 

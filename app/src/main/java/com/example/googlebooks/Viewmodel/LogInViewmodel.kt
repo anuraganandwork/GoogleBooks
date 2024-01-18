@@ -4,8 +4,10 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.googlebooks.Model.ZUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 
@@ -43,5 +45,39 @@ class LogInViewmodel : ViewModel() {
   }
 
 
-    fun LogInWithEmailandPass(email:String, password:String){}
+    fun createUserWithEmailandPass(email:String, password:String, home:()->Unit){
+
+        viewModelScope.launch{
+try {
+
+
+    auth.createUserWithEmailAndPassword(email, password)
+        .addOnCompleteListener {
+            if (it.isSuccessful) {
+                val name = it.result.user?.email?.split('@')?.get(0)
+                createUser(name)
+                home()
+                Log.d("Created", "Account created:: ${it.result}")
+
+            } else {
+                Log.d("LoginError", "Failed::")
+            }
+        }
+}
+catch (e:Exception){
+    Log.d("Exception","$e")
+}
+    }
+    }
+    fun createUser(Username: String?){
+        val userId = auth.currentUser?.uid
+//        val user = mutableMapOf<String,Any>()
+//        user["UserID"]= userId.toString()
+//        user["Name"]= Username.toString()
+         val newUser = ZUser(null,userId,Username.toString(),"","Keep growing slowly","Entrepreneur").toMap()
+
+//       FirebaseFirestore.getInstance().collection("Users").add(user)
+        FirebaseFirestore.getInstance().collection("Users").add(newUser)
+    }
+
 }

@@ -23,7 +23,7 @@ fun Navigations(){
             SplashScreen(navController = navcontroller)
         }
         composable(AllScreens.HomeScreen.name){
-            HomeScreen()
+            HomeScreen(navcontroller)
         }
 
         composable(AllScreens.LoginScreen.name){

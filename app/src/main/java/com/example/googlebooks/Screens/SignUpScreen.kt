@@ -32,6 +32,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -53,6 +54,9 @@ fun SignUpScreen(navController: NavController, viewModel: LogInViewmodel){
     val showError = remember {
         mutableStateOf(false)
     }
+    val showEmailError = remember {
+        mutableStateOf(false)
+    }
     val focusManager= LocalFocusManager.current
     val focusRequester = remember{ FocusRequester() }
     var passwordVisible = remember {
@@ -70,7 +74,9 @@ fun SignUpScreen(navController: NavController, viewModel: LogInViewmodel){
         )
         Spacer(modifier = Modifier.padding(30.dp))
 
-
+       if (showEmailError.value == true){
+           Text(text = "Email is not appropriate!", color = Color.Red, textAlign = TextAlign.Left, modifier = Modifier.fillMaxWidth())
+       }
         TextField(value =  email.value, onValueChange = {email.value = it} ,
             modifier = Modifier
                 .fillMaxWidth()
@@ -107,14 +113,25 @@ fun SignUpScreen(navController: NavController, viewModel: LogInViewmodel){
 
         Spacer(modifier = Modifier.padding(10.dp))
         if (showError.value){
-            Text(text = "Please provide the full information. ", color = Color.Red)
+            Text(text = "Please check the information and retry. ", color = Color.Red)
         }
         Button(onClick = {
 
             if(email.value.trim().isNotEmpty() && password.value.trim().isNotEmpty()){
 
+                if (email.value.contains('@') && email.value.contains('.'))
+
+                {
+                viewModel.createUserWithEmailandPass(email.value,password.value){
+                    navController.navigate(AllScreens.HomeScreen.name)
+                }
+
                 email.value=""
                 password.value=""
+            }
+            else
+                {showEmailError.value= true}
+
             }
             else { showError.value = true}
 
