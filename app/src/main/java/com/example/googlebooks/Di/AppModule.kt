@@ -1,7 +1,9 @@
 package com.example.googlebooks.Di
 
+import com.example.googlebooks.Constants.constants
 import com.example.googlebooks.Constants.conts.Base_Url
 import com.example.googlebooks.Model.BookApi
+import com.example.googlebooks.Repository.BookRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,12 +21,18 @@ object AppModule {
     fun provideBookApi(): BookApi
     {
         return  Retrofit.Builder()
-            .baseUrl(Base_Url)
+            .baseUrl(constants.Base_Url)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(BookApi::class.java)
 
 //         create k under retrofit ka dao hoga
+    }
+
+    @Singleton
+    @Provides
+    fun provideBookRepo(api:BookApi): BookRepo{
+        return BookRepo(api)
     }
 
 }

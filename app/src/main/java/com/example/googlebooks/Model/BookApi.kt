@@ -1,6 +1,7 @@
 package com.example.googlebooks.Model
 
 import com.example.googlebooks.Data.BApi
+import com.example.googlebooks.Data.Item
 import com.example.googlebooks.Data.VolumeInfo
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -17,5 +18,5 @@ interface BookApi {
    suspend fun getAllBooks(@Query("q") query : String):BApi
 
    @GET("volumes/{bookId}")
-   suspend fun getAllInfo(@Path("bookId") bookId : String): VolumeInfo
+   suspend fun getInfo(@Path("bookId") bookId : String): Item
 }
