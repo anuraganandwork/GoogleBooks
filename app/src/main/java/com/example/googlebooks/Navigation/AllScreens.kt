@@ -4,5 +4,6 @@ enum class AllScreens {
     SplashScreen,
     HomeScreen,
     LoginScreen,
-    SignUpScreen
+    SignUpScreen,
+    SearchScreen
 }

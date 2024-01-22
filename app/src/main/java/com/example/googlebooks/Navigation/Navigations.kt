@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.googlebooks.Screens.HomeScreen
 import com.example.googlebooks.Screens.LoginScreen
+import com.example.googlebooks.Screens.SearchScreen
 import com.example.googlebooks.Screens.SignUpScreen
 import com.example.googlebooks.Screens.SplashScreen
 import com.example.googlebooks.Viewmodel.BookSearchViewmodel
@@ -35,6 +36,10 @@ fun Navigations(){
         
         composable(AllScreens.SignUpScreen.name){
             SignUpScreen(navController = navcontroller,logInViewmodel)
+        }
+        
+        composable(AllScreens.SearchScreen.name){
+            SearchScreen(bookSearchViewmodel = BookSearchViewmodel)
         }
     }
 

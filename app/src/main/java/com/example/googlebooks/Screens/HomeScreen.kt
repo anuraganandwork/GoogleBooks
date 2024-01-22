@@ -32,28 +32,35 @@ fun HomeScreen(navController: NavController, viewmodelBook: BookSearchViewmodel)
                 navController.navigate(AllScreens.LoginScreen.name)
 //                    }
             })
-        viewmodelBook.searchBook("Android")
+        //viewmodelBook.searchBook("Android")
         Column {
 
 
             Text(text = "Welcome, ${username.toString()}")
-            if (viewmodelBook._listOfBook.value.data.isNullOrEmpty() == true){
-                CircularProgressIndicator()
-                Log.d("BookApi","ViewIfStat${viewmodelBook._listOfBook.value.data?.get(0)?.volumeInfo?.authors.toString()}")
-               }
-            else {
-                Log.d("BookApi", "from ViewElse${viewmodelBook._listOfBook.value.data?.get(0)?.volumeInfo?.authors.toString()}")
-     val list = viewmodelBook._listOfBook.value.data ?: emptyList()
-//               for (i in 0..8)
-//                Text(text = viewmodelBook._listOfBook.value.data!![i].volumeInfo.authors.toString())
-       LazyColumn(){
-           items(items = list){
-              Text(text = it.volumeInfo.authors.toString())
-           }
-       }
+            Icon(painter = painterResource(id = R.drawable.searchicon),
+                contentDescription = "Search",
+                modifier = Modifier.clickable {
+                    navController.navigate(AllScreens.SearchScreen.name)
+                })
 
 
-        }
+
+
+//            if (viewmodelBook._listOfBook.value.data.isNullOrEmpty() == true){
+//                CircularProgressIndicator()
+//                Log.d("BookApi","ViewIfStat${viewmodelBook._listOfBook.value.data?.get(0)?.volumeInfo?.authors.toString()}")
+//               }
+//            else {
+//                Log.d("BookApi", "from ViewElse${viewmodelBook._listOfBook.value.data?.get(0)?.volumeInfo?.authors.toString()}")
+//     val list = viewmodelBook._listOfBook.value.data ?: emptyList()
+////               for (i in 0..8)
+////                Text(text = viewmodelBook._listOfBook.value.data!![i].volumeInfo.authors.toString())
+//       LazyColumn(){
+//           items(items = list){
+//              Text(text = it.volumeInfo.authors.toString())
+//           }
+//       }
+//            }
 
         }
     }
