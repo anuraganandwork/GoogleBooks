@@ -1,11 +1,15 @@
 package com.example.googlebooks.Navigation
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.googlebooks.Screens.DetailedBookScreen
 import com.example.googlebooks.Screens.HomeScreen
 import com.example.googlebooks.Screens.LoginScreen
 import com.example.googlebooks.Screens.SearchScreen
@@ -14,6 +18,7 @@ import com.example.googlebooks.Screens.SplashScreen
 import com.example.googlebooks.Viewmodel.BookSearchViewmodel
 import com.example.googlebooks.Viewmodel.LogInViewmodel
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun Navigations(){
 
@@ -39,7 +44,17 @@ fun Navigations(){
         }
         
         composable(AllScreens.SearchScreen.name){
-            SearchScreen(bookSearchViewmodel = BookSearchViewmodel)
+            SearchScreen(bookSearchViewmodel = BookSearchViewmodel, navcontroller)
+        }
+
+        val detailScreen = AllScreens.DetailedBookScreen.name
+
+        composable("$detailScreen/{BookID}", arguments = listOf(navArgument("BookID"){
+            type = NavType.StringType
+        })){
+
+          val BookId = it.arguments?.getString("BookID")
+            DetailedBookScreen(BookId.toString(), BookSearchViewmodel)
         }
     }
 
