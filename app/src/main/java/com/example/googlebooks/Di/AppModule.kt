@@ -3,6 +3,9 @@ package com.example.googlebooks.Di
 import com.example.googlebooks.Constants.constants
 import com.example.googlebooks.Model.BookApi
 import com.example.googlebooks.Repository.BookRepo
+import com.example.googlebooks.Repository.FireRepository
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,6 +35,12 @@ object AppModule {
     @Provides
     fun provideBookRepo(api:BookApi): BookRepo{
         return BookRepo(api)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDataRepo(): FireRepository {
+        return FireRepository(FirebaseFirestore.getInstance().collection("SavedBooks"))
     }
 
 }
