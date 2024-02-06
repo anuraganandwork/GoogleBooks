@@ -1,6 +1,7 @@
 package com.example.googlebooks.Navigation
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -12,6 +13,7 @@ import androidx.navigation.navArgument
 import com.example.googlebooks.Screens.DetailedBookScreen
 import com.example.googlebooks.Screens.HomeScreen
 import com.example.googlebooks.Screens.LoginScreen
+import com.example.googlebooks.Screens.SavedBookDetails
 import com.example.googlebooks.Screens.SearchScreen
 import com.example.googlebooks.Screens.SignUpScreen
 import com.example.googlebooks.Screens.SplashScreen
@@ -56,7 +58,24 @@ fun Navigations(){
         })){
 
           val BookId = it.arguments?.getString("BookID")
+
             DetailedBookScreen(BookId.toString(), BookSearchViewmodel, navcontroller, DataVm)
+
+        }
+
+        val savedDetailScreen = AllScreens.SavedBookDetails.name
+        composable("$savedDetailScreen/{BookID}", arguments = listOf(navArgument("BookID"){
+            type = NavType.StringType
+        }
+        )){
+            val BookId = it.arguments?.getString("BookID")
+            val firebaseId = it.arguments?.getString("FirebaseID")
+           SavedBookDetails(BookID =BookId.orEmpty() , viewmodel =BookSearchViewmodel , navController =navcontroller , Dataviewmodel =DataVm )
+           {
+               DataVm.getAllBookFromDatabase()
+               Log.d("NavigationFunction","Callling")
+               navcontroller.navigate(AllScreens.HomeScreen.name)
+           }
         }
     }
 

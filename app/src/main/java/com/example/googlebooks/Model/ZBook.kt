@@ -3,8 +3,8 @@ package com.example.googlebooks.Model
 import com.google.firebase.firestore.Exclude
 
 data class ZBook(
-    @Exclude val id: String? = null,
-
+    val id: String? = null,
+    val FirebaseId: String? =null,
     val title: String? = null,
     val description: String? = null,
     val authors: List<String>? = null,
@@ -18,6 +18,8 @@ data class ZBook(
 
     fun toMap(): MutableMap<String, Any?> {
         return mutableMapOf(
+            "id" to this.id,
+            "FirebaseId" to this.FirebaseId,
             "title" to this.title,
             "description" to this.description,
             "authors" to this.authors,

@@ -20,20 +20,26 @@ class BookSearchViewmodel @Inject  constructor(val repo: BookRepo)
     : ViewModel(){
 
        private val listOfBook:MutableState< DataOrException<List<Item>, Boolean ,Exception>> =
-           mutableStateOf(DataOrException(null, true, Exception("")))
+               mutableStateOf(DataOrException(null, true, Exception("")))
+
+
 
     private val _Book:MutableState< DataOrException<Item, Boolean ,Exception>> =
         mutableStateOf(DataOrException(null, true, Exception("")))
 
 
        val _listOfBook = listOfBook
-    val Book = _Book
+       val Book = _Book
 
     @SuppressLint("SuspiciousIndentation")
     fun searchBook(nameOfBook : String){
         viewModelScope.launch {
-            listOfBook.value.loading= true
+            //listOfBook.value.loading= true
             listOfBook.value=  repo.getBook(nameOfBook)
+
+
+           Log.d("CheckingViewmodel",_listOfBook.value.data.toString())
+
 
             if (listOfBook.value.data?.isNotEmpty() == true){
                 listOfBook.value.loading=false
@@ -53,4 +59,4 @@ class BookSearchViewmodel @Inject  constructor(val repo: BookRepo)
 }
 
 
-//1246
+//832
